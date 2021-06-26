@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import "./styles.css";
+import "./style.css";
 
 interface fizzBuzz {
   fb_number: number;
