@@ -1,10 +1,32 @@
-import { FunctionComponent, useState } from "react";
-import "./style.css";
+import { FunctionComponent, useState } from 'react';
+import './style.css';
 
 interface fizzBuzz {
   fb_number: number;
   status: string;
 }
+
+interface fiboBuzz {
+  fb_index: number;
+  fibo_seq: number;
+  status: string;
+}
+
+let fibArr: Array<fiboBuzz> = [];
+
+let fb_entry: fiboBuzz = {
+  fb_index: 0,
+  fibo_seq: 0,
+  status: "0"
+};
+fibArr.push(fb_entry);
+
+let fb_entry1: fiboBuzz = {
+  fb_index: 1,
+  fibo_seq: 1,
+  status: "1"
+}; 
+fibArr.push(fb_entry1);
 
 export const App: FunctionComponent = () => {
   const [fizzBuzzIndex, setFizzBuzzIndex] = useState(3);
@@ -14,37 +36,57 @@ export const App: FunctionComponent = () => {
     setFizzBuzzIndex(fizzBuzzIndex + 1);
   };
 
-  const getLabel = () => {
-    if (fizzBuzzIndex % 3 === 0 && fizzBuzzIndex % 5 === 0) {
-      return "Fizz Buzz";
+  
+  const getLabel = (offset: number) => {
+    let fbi = offset;
+    if (fbi % 3 === 0 && fbi % 5 === 0) {
+      return 'Fizz Buzz';
     }
-    if (fizzBuzzIndex % 3 === 0) {
-      return "Fizz";
+    if (fbi % 3 === 0) {
+      return 'Fizz';
     }
-    if (fizzBuzzIndex % 5 === 0) {
-      return "Buzz";
+    if (fbi % 5 === 0) {
+      return 'Buzz';
     }
-    return `${fizzBuzzIndex}`;
+    return `${fbi}`;
   };
 
-  const fizzBuzzMe = () => {
-    let numArr: Array<fizzBuzz> = [];
 
-    for (let i = 0; i < 10; i++) {
-      let bar = getLabel();
-      let poop: fizzBuzz = {
-        fb_number: fizzBuzzIndex,
-        status: bar
-      };
-      numArr.push(poop);
-      console.log(poop);
+  const fizzBuzzMe = () => {
+
+    // declare the array starting with the first 2 values of the fibonacci sequence
+    //let fibonacci = [0,1];
+    
+    function listFibonacci(num) {
+    // starting at array index 1, and push current index + previous index to the array
+        for (let i = 1; i < num; i++) {
+          let fb_fish = fibArr[i].fibo_seq + fibArr[i - 1].fibo_seq;
+          //console.log(i + 2,fb_fish,getLabel(fb_fish));
+          let fb_entry: fiboBuzz = {
+            fb_index: i + 2,
+            fibo_seq: fb_fish,
+            status: getLabel(fb_fish)
+          };
+          fibArr.push(fb_entry);
+        }
+        //console.log(fibArr)
+        
+        const listItems = fibArr.map(index => (
+          <ul>
+            <p>
+              {index.fb_index} : {index.status} 6
+            </p>
+          </ul>
+        ));
+
+        return fibArr
+        ;
     }
-    const listItems = numArr.map((index) => (
-      <li>
-        {index.fb_number} {index.status}
-      </li>
-    ));
-    return <ul>{listItems}</ul>;
+    
+    return listFibonacci();
+
+
+
   };
 
   return (
@@ -58,15 +100,8 @@ export const App: FunctionComponent = () => {
         >
           Index: {fizzBuzzIndex}
         </button>
-        <button
-          data-testid="Button2"
-          onClick={() => {
-            handleClick();
-          }}
-        >
-          Result: {getLabel()}
-        </button>
-        {fizzBuzzMe()} {fizzBuzzIndex}
+
+        {fizzBuzzMe()}
       </div>
     </>
   );
