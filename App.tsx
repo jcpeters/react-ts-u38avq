@@ -1,18 +1,16 @@
 import { FunctionComponent, useState } from 'react';
 import './style.css';
 
-interface fizzBuzz {
-  fb_number: number;
-  status: string;
-}
-
 interface fiboBuzz {
   fb_index: number;
   fibo_seq: number;
   status: string;
 }
 
-let fibArr: Array<fiboBuzz> = [];
+interface Ifibobuzz {
+  array: fiboBuzz[];
+}
+let fibArr: fiboBuzz[] = [];
 
 let fb_entry: fiboBuzz = {
   fb_index: 0,
@@ -54,36 +52,31 @@ export const App: FunctionComponent = () => {
 
   const fizzBuzzMe = () => {
 
-    // declare the array starting with the first 2 values of the fibonacci sequence
-    //let fibonacci = [0,1];
     
     function listFibonacci(num) {
     // starting at array index 1, and push current index + previous index to the array
         for (let i = 1; i < num; i++) {
           let fb_fish = fibArr[i].fibo_seq + fibArr[i - 1].fibo_seq;
-          //console.log(i + 2,fb_fish,getLabel(fb_fish));
           let fb_entry: fiboBuzz = {
-            fb_index: i + 2,
+            fb_index: i + 1,
             fibo_seq: fb_fish,
             status: getLabel(fb_fish)
           };
           fibArr.push(fb_entry);
         }
-        //console.log(fibArr)
         
         const listItems = fibArr.map(index => (
           <ul>
             <p>
-              {index.fb_index} : {index.status} 6
+              {index.fb_index} : {index.fibo_seq} : {index.status}
             </p>
           </ul>
         ));
 
-        return fibArr
-        ;
+        return listItems;
     }
     
-    return listFibonacci();
+    return listFibonacci(25);
 
 
 
