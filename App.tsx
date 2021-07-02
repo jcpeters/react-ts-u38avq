@@ -7,24 +7,6 @@ interface fiboBuzz {
   status: string;
 }
 
-interface Ifibobuzz {
-  array: fiboBuzz[];
-}
-let fibArr: fiboBuzz[] = [];
-
-let fb_entry: fiboBuzz = {
-  fb_index: 0,
-  fibo_seq: 0,
-  status: "0"
-};
-fibArr.push(fb_entry);
-
-let fb_entry1: fiboBuzz = {
-  fb_index: 1,
-  fibo_seq: 1,
-  status: "1"
-}; 
-fibArr.push(fb_entry1);
 
 export const App: FunctionComponent = () => {
   const [fizzBuzzIndex, setFizzBuzzIndex] = useState(3);
@@ -52,10 +34,11 @@ export const App: FunctionComponent = () => {
 
   const fizzBuzzMe = () => {
 
-    
     function listFibonacci(num) {
     // starting at array index 1, and push current index + previous index to the array
-        for (let i = 1; i < num; i++) {
+    let fibArr: fiboBuzz[] = [{fb_index: 0,fibo_seq: 0,status: "0"},{fb_index: 1,fibo_seq: 1,status: "1"}];
+    
+    for (let i = 1; i < num; i++) {
           let fb_fish = fibArr[i].fibo_seq + fibArr[i - 1].fibo_seq;
           let fb_entry: fiboBuzz = {
             fb_index: i + 1,
@@ -76,7 +59,7 @@ export const App: FunctionComponent = () => {
         return listItems;
     }
     
-    return listFibonacci(25);
+    return listFibonacci(fizzBuzzIndex);
 
 
 
